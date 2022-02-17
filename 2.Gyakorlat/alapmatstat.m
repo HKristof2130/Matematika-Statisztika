@@ -12,6 +12,11 @@ korrEmpSzoras2=korrigaltszorasnegyzet(sorozat,kozep)
 kmom = kdikmomentum(sorozat)
 terjed = terjedelem(sorozat)
 szoras6 = szorasieggyut6(sorozat)
+medin= median(sorozat)
+absolutmed= medianabsolutelter(sorozat)
+kvart= pkvartilis(sorozat)
+
+
 
 function sorozat = rendezes(sorozat);
 
@@ -71,5 +76,39 @@ end
 function szore = szorasieggyut6(sorozat);
     sn= (empirikusszorasnegyzet(sorozat,empirikuskozep(sorozat)))^1/2;
     szore= sn/empirikuskozep(sorozat);
+
+end
+
+function med = median(sorozat);
+
+    temp= length(sorozat)/2;
+    if mod(length(sorozat),2) == 0
+        med= (sorozat(temp)+sorozat(temp+1))/2;
+    else
+    med = sorozat(temp+1);
+    end
+end
+function absmed = medianabsolutelter(sorozat);
+
+    med= median(sorozat);
+    for i=1: length(sorozat)
+       tmp(i)= abs(sorozat(i)-med);
+    end
+    
+    rendezes(tmp);
+   
+   absmed = median(tmp);
+
+end
+
+function pkvart = pkvartilis(sorozat);
+    p = input('Mi legyen a kvartilis?\n');
+    n = length(sorozat);
+    A = floor(n*p);
+    B = floor(n*p)+1;
+    q = n*p - floor(n*p);
+    
+    pkvart = (1-q)*sorozat(A)+ q*sorozat(B);
+
 
 end
