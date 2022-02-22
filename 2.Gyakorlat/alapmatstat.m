@@ -3,7 +3,7 @@
 %   nums(i)= input('Add meg az erteket\n');
 %end
 
-nums= [3.85,3.44,2.1,2.81,3.27,2.99,1.2,1.92,3.21,1.91];
+nums= [0.63,0.58,6.44,4.68,2.35,3.33,3.77,1.23];
 
 sorozat= rendezes(nums)
 kozep = empirikuskozep(sorozat)
