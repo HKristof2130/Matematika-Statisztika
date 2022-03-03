@@ -17,3 +17,8 @@ average <- function(sorozat){
   
 }
 
+szoras2 <- function(sorozat,kozep){
+  
+  
+}
+
