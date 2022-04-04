@@ -11,11 +11,12 @@ klay_mades = 1;
 p1_win = 0;
 p2_win = 0;
 
-money_on_p1 = 100;
-money_on_p2 = 100;
-graph_m1(1) = 100;
-graph_m2(1) = 100;
 
+
+
+
+curry_win(1) = 0;
+klay_win(1) = 0;
 
 
 
@@ -28,6 +29,8 @@ ending = 1;
 i = 0 ;
 round_ms1 = 0;
 round_ms2 = 0;
+
+
 
 while( ending == 1)
     i = i + 1;
@@ -100,25 +103,22 @@ while( ending == 1)
         
     end
     
-    if i>= 5 && not(round_ms1 == round_ms2)
+    if i>= 8 && not(round_ms1 == round_ms2)
         if round_ms1 > round_ms2
             disp('Az elsõ játékos nyert');
             disp(round_ms1) ;
             disp('Bedobott kosárral');
-            money_on_p1 = money_on_p1 + 200;
-            money_on_p2 = money_on_p2 - 100;
-            graph_m1(j+1) = money_on_p1;
-            graph_m2(j+1) = money_on_p2;
             p1_win = p1_win + 1;
+            curry_win(j+1) = p1_win;
+            klay_win(j+1) = klay_win(j);
         else
             disp('A második játékos nyert');
             disp(round_ms2);
             disp('Bedobott kosárral');
-            money_on_p1 = money_on_p1 - 100;
-            money_on_p2 = money_on_p2 + 200;
-            graph_m1(j+1) = money_on_p1;
-            graph_m2(j+1) = money_on_p2;
+   
             p2_win = p2_win + 1;
+            klay_win(j+1) = p2_win;
+            curry_win(j+1) = curry_win(j);
         end
         ending = 0;
     else
@@ -132,6 +132,9 @@ while( ending == 1)
     
 end
 
+ms1_pr(j) = round_ms1;
+ms2_pr(j) = round_ms2;
+
 count_game = count_game + 1;
 sum_round = sum_round + i;
 
@@ -140,15 +143,15 @@ sum_round = sum_round + i;
 
 end
 
+
+
 avg_madeshot = shoot_sum/count_game
 avg_round = sum_round/count_game
-avg_shottaken = sum_attempt / count_game
+avg_ms1 = sum_madeshot(ms1)/count_game
+avg_ms2 = sum_madeshot(ms2)/count_game
+
 disp('Játszott Játék')
 disp(count_game);
-disp('Ha az elsõ játékosra fogadtunk')
-disp(money_on_p1)
-disp('Ha a második játékosra fogadtunk')
-disp(money_on_p2)
 disp('Nyerések:')
 disp(p1_win)
 disp(p2_win)
@@ -156,9 +159,19 @@ disp(p2_win)
 
 
 
-plot(graph_m1);
+
+figure();
+plot(curry_win); %kék görbe
 hold on;
-plot(graph_m2);
+plot(klay_win); % piros görbe
+title('Gyõzelmek')
+hold off;
+
+figure();
+plot(ms1_pr) %kék görbe
+hold on;
+plot(ms2_pr); %sárga görbe
+title('Körönkénti bedobott kosarak')
 hold off;
 
 
@@ -172,6 +185,15 @@ function s = shoot1(player);
        else
            s = 1;
        end
+
+end
+
+function s = sum_madeshot(ms)
+    
+    s = 0;
+    for i= 1: length(ms)
+       s = s+ ms(i); 
+    end
 
 end
 
